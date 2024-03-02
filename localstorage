@@ -1,0 +1,20 @@
+
+
+$(document).ready(function(){
+
+			let isToggled = localStorage.getItem('sidebarMinimize')==='on';
+			$("#kt_app_sidebar_toggle").click(function(){
+				
+				   localStorage.setItem('sidebarMinimize', 'on');
+					
+					if(isToggled){
+					let getLocalStorage = localStorage.removeItem("sidebarMinimize");
+					}
+					else{
+						localStorage.setItem('sidebarMinimize', 'on');
+					}
+				})
+				
+				let getLocalStorage = localStorage.getItem("sidebarMinimize");
+				$("#kt_app_body").attr('data-kt-app-sidebar-minimize',getLocalStorage);
+		})
