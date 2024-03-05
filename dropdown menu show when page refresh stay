@@ -1,0 +1,115 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Dropdown Menus</title>
+<style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a.active {
+  font-weight: bold; /* Change this to your active link style */
+}
+.dropdown-link.active{
+  background: green;
+  color: #fff;
+  border-radius: 10px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="dropdown">
+  <a href="#" class="dropdown-toggle">Dropdown 1</a>
+  <div class="dropdown-content">
+    <a href="#" class="dropdown-link">Link 1</a>
+    <a href="#" class="dropdown-link">Link 2</a>
+    <a href="#" class="dropdown-link">Link 3</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <a href="#" class="dropdown-toggle">Dropdown 2</a>
+  <div class="dropdown-content">
+    <a href="#" class="dropdown-link">Link 4</a>
+    <a href="#" class="dropdown-link">Link 5</a>
+    <a href="#" class="dropdown-link">Link 6</a>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Handle click event on dropdown toggles
+  $(".dropdown-toggle").click(function(e){
+    e.preventDefault();
+    var dropdown = $(this).parent();
+    $(".dropdown").not(dropdown).removeClass('active'); // Close other dropdowns
+    dropdown.toggleClass('active');
+    
+    // Save state to local storage
+    $(".dropdown").each(function(){
+      var dropdownId = $(this).index('.dropdown'); // Generate unique IDs based on their index
+      var isActive = $(this).hasClass('active');
+      localStorage.setItem(dropdownId, isActive);
+    });
+  });
+
+  // Restore dropdown states from local storage
+  $(".dropdown").each(function(){
+    var dropdownId = $(this).index('.dropdown'); // Generate unique IDs based on their index
+    var isActive = localStorage.getItem(dropdownId);
+    if (isActive === "true") {
+      $(this).addClass('active');
+    }
+  });
+
+  // Handle clicks outside dropdowns to close them
+  $(document).click(function(e) {
+    if (!$(e.target).closest('.dropdown').length) {
+      $(".dropdown").removeClass('active');
+    }
+  });
+
+  // Handle clicks on dropdown links
+  $(".dropdown-link").click(function(e) {
+    e.preventDefault();
+    $(".dropdown-link").removeClass('active'); // Remove active class from all links
+    $(this).addClass('active'); // Add active class to the clicked link
+    var linkIndex = $(this).index('.dropdown-link'); // Generate unique IDs based on their index
+    localStorage.setItem('activeLink', linkIndex); // Save active link index to local storage
+  });
+
+  // Restore active link state from local storage
+  var activeLinkIndex = localStorage.getItem('activeLink');
+  if (activeLinkIndex !== null) {
+    $(".dropdown-link").eq(activeLinkIndex).addClass('active');
+  }
+});
+</script>
+
+</body>
+</html>
