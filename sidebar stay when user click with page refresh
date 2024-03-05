@@ -1,0 +1,29 @@
+<script>
+		
+		$(document).ready(function(){
+		
+		let isToggled = localStorage.getItem('sidebarMinimize')==='on';
+		$("#kt_app_sidebar_toggle").click(function(){
+		localStorage.setItem('sidebarMinimize', 'on');
+		localStorage.setItem('addClass', 'show');
+			if(isToggled){
+			let getLocalStorage = localStorage.removeItem("sidebarMinimize");
+			localStorage.removeItem('addClass');
+			}
+			else{
+				localStorage.setItem('sidebarMinimize', 'on');
+				localStorage.setItem('addClass', 'show');
+			}
+		})
+		let getLocalStorage = localStorage.getItem("sidebarMinimize");
+		$("#kt_app_body").attr('data-kt-app-sidebar-minimize',getLocalStorage);
+
+		let getLocalStorage1 = localStorage.getItem("addClass");
+		$("#kt_app_sidebar").addClass(getLocalStorage1);
+         
+		setTimeout(()=>{
+			$(".loader").css('display','none');
+		},500)
+	
+})
+	</script>
