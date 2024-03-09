@@ -1,0 +1,27 @@
+ <script>
+
+            //After page refresh you are click on any element after page refresh focus 
+            // Autometically on that element.
+            function focusOnElement() {
+                var element = document.getElementById('#ContentPlaceHolder1_updatepnl');
+                element.scrollIntoView();
+                element.focus();
+            }
+            // Add click event listeners to all elements to focus on the specific element
+            var elements = document.querySelectorAll('*');
+            elements.forEach(function (element) {
+                element.addEventListener('touchend', focusOnElement);
+            });
+
+            // Check if there is a stored position for the specific element
+            var storedPosition = sessionStorage.getItem('elementPosition');
+            if (storedPosition) {
+                window.scrollTo(0, storedPosition); // Scroll to the stored position
+            }
+
+            // Store the position of the specific element when the page unloads
+            window.addEventListener('beforeunload', function () {
+                var currentPosition = window.scrollY;
+                sessionStorage.setItem('elementPosition', currentPosition);
+            });
+        </script>
