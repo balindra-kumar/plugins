@@ -109,6 +109,18 @@ $(document).ready(function(){
     $(".dropdown-link").eq(activeLinkIndex).addClass('active');
   }
 });
+
+
+
+  // when click homeMenu then remove the attribute and remove item from the localstorage
+      function homeMenu() {
+        
+          $(".menu-accordion, .menu-sub-accordion .menu-link").removeClass('active');
+          localStorage.removeItem('activeLink'); // Remove active link index
+          for (var i = 0; i < localStorage.length; i++) {
+              localStorage.removeItem(i.toString());
+          }
+      }
 </script>
 
 </body>
